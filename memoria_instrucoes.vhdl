@@ -30,6 +30,24 @@ architecture arch_memoria_instrucoes of memoria_instrucoes is
         others => X"00"
     );
 begin
-    o_INST <= ROM(conv_integer(i_ADDR)) & ROM(conv_integer(i_ADDR + 1)) &
-                   ROM(conv_integer(i_ADDR + 2)) & ROM(conv_integer(i_ADDR + 3)); 
+    process(i_ADDR)
+        variable addr_int : integer;
+        variable addr_slv : std_logic_vector(31 downto 0);
+    begin
+        addr_slv := i_ADDR;
+        -- Se o endereço contiver 'U', 'X', etc., usar 0
+        for i in addr_slv'range loop
+            if addr_slv(i) /= '0' and addr_slv(i) /= '1' then
+                addr_slv := (others => '0');
+                exit;
+            end if;
+        end loop;
+        
+        addr_int := to_integer(unsigned(addr_slv));
+        if addr_int >= 0 and addr_int < 65532 then  -- 65536 - 4 para evitar overflow
+            o_INST <= ROM(addr_int) & ROM(addr_int + 1) & ROM(addr_int + 2) & ROM(addr_int + 3);
+        else
+            o_INST <= (others => '0');
+        end if;
+    end process;
 end architecture arch_memoria_instrucoes;

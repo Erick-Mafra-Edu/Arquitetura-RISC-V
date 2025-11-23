@@ -1,0 +1,34 @@
+v 4
+file . "testbench.vhdl" "5408908cc4b466775714d88041c897abf4798c23" "20251123215946.547":
+  entity testbench at 1( 0) + 0 on 39;
+  architecture test_1 of testbench at 9( 125) + 0 on 40;
+file . "memoria_dados.vhdl" "8b912a902b0928a587641379fd27314a9f625613" "20251123215900.957":
+  entity memoria_dados at 1( 0) + 0 on 27;
+  architecture arch_memoria_dados of memoria_dados at 15( 339) + 0 on 28;
+file . "mux21.vhdl" "09424d6da51b1227c76b42efc369e9988d16a43e" "20251123215857.306":
+  entity mux21 at 1( 0) + 0 on 23;
+  architecture a1 of mux21 at 19( 379) + 0 on 24;
+file . "banco_registradores.vhdl" "cf64c6dd05ac23cc5eca527ed6e4da721d7c4b8b" "20251123215853.494":
+  entity banco_registradores at 2( 26) + 0 on 19;
+  architecture arch_1 of banco_registradores at 21( 680) + 0 on 20;
+file . "memoria_instrucoes.vhdl" "6aa3ad80ba967aa5b02d6dc2a1003027e4adfd83" "20251123215946.483":
+  entity memoria_instrucoes at 1( 0) + 0 on 35;
+  architecture arch_memoria_instrucoes of memoria_instrucoes at 13( 299) + 0 on 36;
+file . "ffd.vhdl" "9c4eb4223cc56292d6de08a4b8bada2391b62b44" "20251123215845.547":
+  entity ffd at 1( 0) + 0 on 11;
+  architecture arch_ffd of ffd at 14( 318) + 0 on 12;
+file . "somador.vhdl" "730a9ba25607b197c5d187d2efb5ac4f7aca1187" "20251123215848.022":
+  entity somador at 2( 26) + 0 on 13;
+  architecture arch_1 of somador at 12( 272) + 0 on 14;
+file . "gerador_imediato.vhdl" "bc582500002dc9f7dad2d34b3c8c25ed05d5353e" "20251123215851.825":
+  entity gerador_imediato at 1( 0) + 0 on 17;
+  architecture arch_gerador_imediato of gerador_imediato at 12( 267) + 0 on 18;
+file . "ULA.vhdl" "765057f1640e57399288f6c4795169ab42e3fa7f" "20251123215855.261":
+  entity ula at 2( 37) + 0 on 21;
+  architecture a1 of ula at 21( 591) + 0 on 22;
+file . "controle.vhdl" "970cecee567b25de1a9825b70b1cd89e047be541" "20251123215859.103":
+  entity controle at 1( 0) + 0 on 25;
+  architecture arch_controle of controle at 19( 998) + 0 on 26;
+file . "design.vhdl" "9aed8b72e1533847123ebb2cc6aad23d4d6023c1" "20251123215946.517":
+  entity riscv32i at 37( 1779) + 0 on 37;
+  architecture arch_2 of riscv32i at 63( 2884) + 0 on 38;

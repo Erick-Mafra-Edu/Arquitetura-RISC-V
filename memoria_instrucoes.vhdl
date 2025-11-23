@@ -32,7 +32,4 @@ architecture arch_memoria_instrucoes of memoria_instrucoes is
 begin
     o_INST <= ROM(conv_integer(i_ADDR)) & ROM(conv_integer(i_ADDR + 1)) &
                    ROM(conv_integer(i_ADDR + 2)) & ROM(conv_integer(i_ADDR + 3)); 
-    
- 
-
 end architecture arch_memoria_instrucoes;

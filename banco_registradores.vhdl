@@ -37,6 +37,6 @@ begin
 
     o_RS1 <= w_REG(conv_integer(i_RS1)) when i_RS1 /= "00000" else (others => '0');   -- mostra conteúdo do registrador apontado por i_RS1 ou zero
     o_RS2 <= w_REG(conv_integer(i_RS2)) when i_RS2 /= "00000" else (others => '0');   -- mostra conteúdo do registrador apontado por i_RS2
-    o_WR  <= w_REG(conv_integer(i_WRaddr)) when i_WRaddr /= "00000" else (others => '0'); -- debug: conteúdo do registrador apontado por i_WRaddr
+    o_WR  <= i_DATA when (i_WRena = '1' and i_WRaddr /= "00000") else w_REG(conv_integer(i_WRaddr)) when i_WRaddr /= "00000" else (others => '0'); -- debug: conteúdo sendo escrito ou atual
 
 end arch_1;

@@ -21,12 +21,29 @@ begin
 
     process (i_OPCODE)
     begin
-        o_ALU_SRC   <= i_OPCODE(2); -- bit 3 do opcode
-        o_MEM2REG   <= i_OPCODE(4); -- bit 5 do opcode
-        o_REG_WRITE <= i_OPCODE(3); -- bit 4 do opcode
-        o_MEM_READ  <= i_OPCODE(5); -- bit 6 do opcode
-        o_MEM_WRITE <= i_OPCODE(6); -- bit 7 do opcode
-        o_ALUOP     <= i_OPCODE(1 downto 0); -- bits 1 e 0 do opcode
+        case i_OPCODE is
+            when "0010011" => -- I-type (addi, etc.)
+                o_ALU_SRC   <= '1'; -- use immediate
+                o_MEM2REG   <= '0'; -- use ALU result
+                o_REG_WRITE <= '1'; -- write to register
+                o_MEM_READ  <= '0';
+                o_MEM_WRITE <= '0';
+                o_ALUOP     <= "00"; -- ADD operation
+            when "0110011" => -- R-type (add, sub, etc.)
+                o_ALU_SRC   <= '0'; -- use register
+                o_MEM2REG   <= '0'; -- use ALU result
+                o_REG_WRITE <= '1'; -- write to register
+                o_MEM_READ  <= '0';
+                o_MEM_WRITE <= '0';
+                o_ALUOP     <= "10"; -- R-type operations
+            when others =>
+                o_ALU_SRC   <= '0';
+                o_MEM2REG   <= '0';
+                o_REG_WRITE <= '0';
+                o_MEM_READ  <= '0';
+                o_MEM_WRITE <= '0';
+                o_ALUOP     <= "00";
+        end case;
     end process;
 
 end arch_controle;

@@ -55,12 +55,15 @@ entity RISCV32i is
             o_RS2_DATA     : out std_logic_vector(31 downto 0);
             o_IMM        : out std_logic_vector(31 downto 0); -- imediato
             o_ULA        : out std_logic_vector(31 downto 0); -- saida da ULA
-            o_MEM        : out std_logic_vector(31 downto 0) -- saida memoria
+            o_MEM        : out std_logic_vector(31 downto 0); -- saida memoria
+            o_REG_WRITE  : out std_logic; -- sinal de controle REG_WRITE
+            o_ALU_SRC    : out std_logic; -- sinal de controle ALU_SRC
+            o_MEM2REG    : out std_logic  -- sinal de controle MEM2REG
          );
 
 end RISCV32i;
 
-architecture arch_2 of RISCV32i is
+architecture arch_3 of RISCV32i is
     signal w_RS1, w_RS2 : std_logic_vector(31 downto 0); -- liga a saída do banco
     signal w_ULA : std_logic_vector(31 downto 0); -- liga a saída da ULA
     signal w_ULAb: std_logic_vector(31 downto 0); -- liga entrada b da ula
@@ -75,6 +78,7 @@ architecture arch_2 of RISCV32i is
     signal w_PC, w_PC4 : std_logic_vector(31 downto 0); -- endereco da instrucao/ proxima instruca
     signal w_INST : std_logic_vector(31 downto 0); -- instrução lida
     signal w_RD_DATA : std_logic_vector(31 downto 0);
+    signal w_REG_DATA : std_logic_vector(31 downto 0); -- dado que vai para o banco de registradores
 
 
 
@@ -94,7 +98,7 @@ begin
 
     u_CONTROLE: entity work.controle
     port map (    
-        i_OPCODE     => w_INST(31 downto 25), -- Ins[31-26]
+        i_OPCODE     => w_INST(6 downto 0), -- Opcode correto: bits 6-0
         o_ALU_SRC    => w_ALU_SRC, -- escolhe entre w_RS2 e w_IMED
         o_MEM2REG    => w_MEM2REG, -- escolhe entre w_ALU e w_MEM
         o_REG_WRITE    => w_REG_WRITE, -- permite escrever no BANCO DE REGISTRADORES
@@ -138,7 +142,7 @@ begin
           i_WRaddr  => w_INST(11 downto 7), -- coloque os campos corretos da instrução
           i_RS1     => w_INST(19 downto 15), -- separação do campo rs1 da instrução
           i_RS2     => w_INST(24 downto 20), -- separação do campo rs2 da instrução
-            i_DATA     => w_ULA, 
+            i_DATA     => w_REG_DATA, 
             o_RS1     => w_RS1,    
             o_RS2     => w_RS2,
             o_WR      => w_RD_DATA
@@ -163,6 +167,14 @@ begin
         o_MUX   => w_ULAb 
     );
     
+    u_MUX_MEM2REG: entity work.mux21
+    port map (
+        i_A        => w_ULA, 
+        i_B        => w_MEM, -- saida da memoria de dados
+        i_SEL    => w_MEM2REG, -- sinal do controle
+        o_MUX   => w_REG_DATA 
+    );
+    
     -- Sinais para depuração com o testbench
     o_INST         <= w_INST; -- depuração do resultado da ULA
     o_OPCODE       <= w_INST(6 downto 0);
@@ -174,9 +186,12 @@ begin
     o_IMM          <= w_IMM;
     o_ULA          <= w_ULA; -- depuração do resultado da ULA
     o_MEM          <= w_MEM;
+    o_REG_WRITE    <= w_REG_WRITE;
+    o_ALU_SRC      <= w_ALU_SRC;
+    o_MEM2REG      <= w_MEM2REG;
     o_RD_DATA      <= w_RD_DATA;
     
 
 
 
-end arch_2;
+end arch_3;

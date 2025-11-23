@@ -24,6 +24,9 @@ architecture test_1 of testbench is
     signal w_IMM             : std_logic_vector(31 downto 0);
     signal w_ULA             : std_logic_vector(31 downto 0);
     signal w_MEM             : std_logic_vector(31 downto 0);
+    signal w_REG_WRITE       : std_logic;
+    signal w_ALU_SRC         : std_logic;
+    signal w_MEM2REG         : std_logic;
     signal w_RD_DATA         : std_logic_vector(31 downto 0);
 
     -- helper: convert std_logic_vector to string (binary)
@@ -45,7 +48,7 @@ architecture test_1 of testbench is
 begin
 
     -- Connect DUV
-    u_DUV: entity work.RISCV32i(arch_2) 
+    u_DUV: entity work.RISCV32i 
              port map(
                  i_CLK      => w_CLK,
                  i_RSTn     => w_RSTn,
@@ -59,7 +62,10 @@ begin
                  o_IMM      => w_IMM,
                  o_ULA      => w_ULA,
                  o_MEM      => w_MEM,
-                 o_RD_DATA  => w_RD_DATA
+                 o_RD_DATA  => w_RD_DATA,
+                 o_REG_WRITE=> w_REG_WRITE,
+                 o_ALU_SRC  => w_ALU_SRC,
+                 o_MEM2REG  => w_MEM2REG
     );
 
     -- Gerador de CLOCK
@@ -79,7 +85,7 @@ begin
     begin
         wait until rising_edge(w_CLK);
         cycle <= cycle + 1;
-        report "Cycle " & integer'image(cycle) & " | RD_addr=" & integer'image(to_integer(unsigned(w_RD_ADDR))) & " | RD_data=" & slv_to_string(w_RD_DATA);
+        report "Cycle " & integer'image(cycle) & " | RD_addr=" & integer'image(to_integer(unsigned(w_RD_ADDR))) & " | RS1_addr=" & integer'image(to_integer(unsigned(w_RS1_ADDR))) & " | RS2_addr=" & integer'image(to_integer(unsigned(w_RS2_ADDR))) & " | RD_data=" & slv_to_string(w_RD_DATA) & " | ULA=" & slv_to_string(w_ULA) & " | REG_WRITE=" & std_logic'image(w_REG_WRITE);
     end process;
 
   process

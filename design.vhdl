@@ -75,7 +75,7 @@ architecture arch_3 of RISCV32i is
     -- sinais do gerador de imediato
     signal w_IMM : std_logic_vector(31 downto 0);
     -- sinais do PC e memória de instrução
-    signal w_PC, w_PC4 : std_logic_vector(31 downto 0); -- endereco da instrucao/ proxima instruca
+    signal w_PC, w_PC4 : std_logic_vector(31 downto 0); -- endereco da instrucao/ proxima instrucao
     signal w_INST : std_logic_vector(31 downto 0); -- instrução lida
     signal w_RD_DATA : std_logic_vector(31 downto 0);
     signal w_REG_DATA : std_logic_vector(31 downto 0); -- dado que vai para o banco de registradores
@@ -152,6 +152,7 @@ begin
     port map(
         i_A    => w_RS1,
         i_B    => w_ULAb,
+        i_OPCODE => w_INST(6 downto 0), -- Opcode da instrução
         i_F3    => w_INST(14 downto 12), -- Funct3 da instrução
         i_INST30=> w_INST(30), -- bit 30 da instrução
         i_ALUOP => w_ALUOP, -- sinal do controle
@@ -173,6 +174,18 @@ begin
         i_B        => w_MEM, -- saida da memoria de dados
         i_SEL    => w_MEM2REG, -- sinal do controle
         o_MUX   => w_REG_DATA 
+    );
+    
+    -- Memoria de dados
+    u_MEM_DADOS: entity work.memoria_dados
+    port map (
+        i_CLK       => i_CLK,
+        i_RSTn      => i_RSTn,
+        i_MEM_WRITE => w_MEM_WRITE,
+        i_MEM_READ  => w_MEM_READ,
+        i_ADDR      => w_ULA, -- endereco calculado pela ULA
+        i_DATA      => w_RS2, -- dado do registrador rs2 para escrita
+        o_DATA      => w_MEM  -- dado lido da memoria
     );
     
     -- Sinais para depuração com o testbench

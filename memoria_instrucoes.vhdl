@@ -11,7 +11,6 @@ entity memoria_instrucoes is
 end entity memoria_instrucoes;
 
 architecture arch_memoria_instrucoes of memoria_instrucoes is
-    
     type t_ROM_ARRAY is array (0 to 65535) of std_logic_vector(7 downto 0);      
     constant ROM : t_ROM_ARRAY := (
     	"00000000","00010000","00000010","10010011", -- addi t0, zero, 1 
@@ -27,27 +26,32 @@ architecture arch_memoria_instrucoes of memoria_instrucoes is
 		"00000001","11010011","01101001","10110011", -- or   s3, t1, t4 # s3 = 2or5 = 7
 		"00000001","11010010","11001001","10110011", -- xor  s3, t0, t4 # s3 = 1xor5 = 4
 	
-        others => X"00"
+		-- Inicializar x2 com 0
+		"00000000","00000000","00000010","00010011", -- addi x2, zero, 0
+	
+		-- create tests to lw sw
+        -- Armazenar 0 na memória
+		"00000000","00000000","00000000","00100011", -- sw x0, 0(x0) || opcode=0100011 rs=00000 rt=00000
+		-- Carregar valor da memória
+		"00000100","00000001","00010000","00000011", -- lw x1, 4(x2) || opcode=0000011 rs=00010 rt=00001
+
+		-- Modificar o valor
+		"00000000","00000001","00000001","00010011", -- addi x1, x1, 1 || opcode=0010011 rs=00001 rt=00001
+
+		-- Armazenar de volta
+		"00000100","00010010","00001000","00100011", -- sw x1, 4(x2) || opcode=0100011 rs=00010 rt=00001
+		others => X"00"
     );
-begin
-    process(i_ADDR)
-        variable addr_int : integer;
-        variable addr_slv : std_logic_vector(31 downto 0);
+begin 
+	process(all)
+    	variable addr_int : integer;
     begin
-        addr_slv := i_ADDR;
-        -- Se o endereço contiver 'U', 'X', etc., usar 0
-        for i in addr_slv'range loop
-            if addr_slv(i) /= '0' and addr_slv(i) /= '1' then
-                addr_slv := (others => '0');
-                exit;
-            end if;
-        end loop;
-        
-        addr_int := to_integer(unsigned(addr_slv));
-        if addr_int >= 0 and addr_int < 65532 then  -- 65536 - 4 para evitar overflow
-            o_INST <= ROM(addr_int) & ROM(addr_int + 1) & ROM(addr_int + 2) & ROM(addr_int + 3);
-        else
-            o_INST <= (others => '0');
-        end if;
+    addr_int := to_integer(unsigned(i_ADDR));
+    o_INST <= ROM(addr_int) & ROM(addr_int + 1) &
+                   ROM(addr_int + 2) & ROM(addr_int + 3);
     end process;
+ 
+
 end architecture arch_memoria_instrucoes;
+
+

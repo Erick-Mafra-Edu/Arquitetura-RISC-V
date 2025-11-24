@@ -17,14 +17,14 @@
 ---- x A ULA deve realizar, pelo menos, as operacoes de ADD/SUB, AND, OR, XOR
 
 
--- Inclua a memoria de dados e seu caminho de dados.
+-- x Inclua a memoria de dados e seu caminho de dados.
 ---- Com esse arquivo sera possivel fazer operacoes de LW e SW.
----- A memoria de dados deve receber: 
------- A saida w_ULA como entrada de endereco.
------- A saioda w_RS2 como entrada de dados.
+---- x A memoria de dados deve receber: 
+------ X A saida w_ULA como entrada de endereco.
+------ X A saioda w_RS2 como entrada de dados.
 ------ Controlar a operacao com sinais do controle.
 
--- Inclua um multiplexador no projeto para que o controle possa escolher entre colocar o dado que sai da ULA ou da memoia de dados no banco de registradores
+-- x Inclua um multiplexador no projeto para que o controle possa escolher entre colocar o dado que sai da ULA ou da memoia de dados no banco de registradores
 
 -- Nao e necessario implementar o caminho dos desvios condicionais e incondicionais, mas e desejavel que o controle gere o sinal de desvio
 
@@ -65,7 +65,7 @@ end RISCV32i;
 
 architecture arch_3 of RISCV32i is
     signal w_RS1, w_RS2 : std_logic_vector(31 downto 0); -- liga a saida do banco
-    signal w_ULA : std_logic_vector(31 downto 0); -- liga a sa­da da ULA
+    signal w_ULA : std_logic_vector(31 downto 0); -- liga a saida da ULA
     signal w_ULAb: std_logic_vector(31 downto 0); -- liga entrada b da ula
     signal w_ZERO: std_logic; -- register 0
     
@@ -74,7 +74,7 @@ architecture arch_3 of RISCV32i is
     
     -- sinais do gerador de imediato
     signal w_IMM : std_logic_vector(31 downto 0);
-    -- sinais do PC e memÂ³ria de instrucao
+    -- sinais do PC e memoria de instrucao
     signal w_PC, w_PC4 : std_logic_vector(31 downto 0); -- endereco da instrucao/ proxima instrucao
     signal w_INST : std_logic_vector(31 downto 0); -- instrucalida
     signal w_RD_DATA : std_logic_vector(31 downto 0);
@@ -86,13 +86,15 @@ architecture arch_3 of RISCV32i is
     signal w_REG_WRITE    : std_logic;
     signal w_MEM_READ    : std_logic;
     signal w_MEM_WRITE    : std_logic;
-    signal w_ALUOP        : std_logic_vector(1 downto 0);
+    signal w_ALUOP        : std_logic_vector(2 downto 0);
     
 begin
 
     u_CONTROLE: entity work.controle
     port map (    
         i_OPCODE     => w_INST(6 downto 0), -- Opcode correto: bits 6-0
+        i_FUNCT3     => w_INST(14 downto 12),
+        i_FUNCT7     => w_INST(31 downto 25),
         o_ALU_SRC    => w_ALU_SRC, -- escolhe entre w_RS2 e w_IMED
         o_MEM2REG    => w_MEM2REG, -- escolhe entre w_ALU e w_MEM
         o_REG_WRITE    => w_REG_WRITE, -- permite escrever no BANCO DE REGISTRADORES
@@ -101,7 +103,7 @@ begin
         o_ALUOP        => w_ALUOP    -- gera sinais para ajudar a escolher a operacada ULA
     );
 
-    u_PC: entity work.ffd -- registra o PC (proima instruÂ§ca ser executada)
+    u_PC: entity work.ffd -- registra o PC (proima instruÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ§ca ser executada)
     port map (
         i_DATA    => w_PC4, 
         i_CLK     => i_CLK,
@@ -109,7 +111,7 @@ begin
         o_DATA    => w_PC
     );
     
-    u_SOMA4 : entity work.somador -- calcula o enderec da prÂ³oma instrucaca    port map (    
+    u_SOMA4 : entity work.somador -- calcula o enderec da prÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³oma instrucaca    port map (    
     port map (
         i_A        => w_PC, 
         i_B      => "00000000000000000000000000000100",  
@@ -134,7 +136,7 @@ begin
           i_RSTn    => i_RSTn, 
           i_WRena    => w_REG_WRITE, -- coloque os campos corretos do controle
           i_WRaddr  => w_INST(11 downto 7), -- coloque os campos corretos da instruca
-          i_RS1     => w_INST(19 downto 15), -- separacado campo rs1 da instruÂ§Â£ca 
+          i_RS1     => w_INST(19 downto 15), -- separacado campo rs1 da instruÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ§ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ£ca 
           i_RS2     => w_INST(24 downto 20), -- separacado campo rs2 da instrucaca  
           i_DATA     => w_REG_DATA, 
             o_RS1     => w_RS1,    

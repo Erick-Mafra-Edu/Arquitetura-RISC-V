@@ -8,7 +8,7 @@ entity banco_registradores is
 	Port (	i_CLK  	: in std_logic;
     		i_RSTn	: in std_logic;
             i_WRena	: in std_logic;
-        i_WRaddr: in std_logic_vector(4 downto 0);
+            i_WRaddr: in std_logic_vector(4 downto 0);
     		i_RS1 	: in std_logic_vector(4 downto 0);
             i_RS2 	: in std_logic_vector(4 downto 0);
                 i_DATA 	: in std_logic_vector(31 downto 0);

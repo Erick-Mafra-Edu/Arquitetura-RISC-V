@@ -20,7 +20,7 @@ architecture arch_memoria_dados of memoria_dados is
   signal memoria : t_MEMORIA := (others => (others => '0'));
   
 begin
-  -- Processo de escrita (siÂ­ncrono) e Processo de leitura (combinacional)
+  -- Processo de escrita (sincrono) e Processo de leitura (combinacional)
   process(i_CLK, i_MEM_WRITE, i_ADDR, i_MEM_READ, memoria)
     variable addr_int : integer;
   begin

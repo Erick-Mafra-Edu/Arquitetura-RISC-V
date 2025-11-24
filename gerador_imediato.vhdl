@@ -18,7 +18,7 @@ begin
     process( i_INST, w_OPCODE, w_TYPE_I, w_TYPE_S, w_TYPE_B, w_TYPE_J)
     begin
         case w_OPCODE is
-            when ("0010011") => w_TEMP <= w_TYPE_I; -- LW, I aritimético
+            when ("0010011") => w_TEMP <= w_TYPE_I; -- LW, I aritimeco
             when ("0000011") => w_TEMP <= w_TYPE_I;
             when ("0100011") => w_TEMP <= w_TYPE_S; --SW
             when ("1100011") => w_TEMP <= w_TYPE_B; --BRANCH

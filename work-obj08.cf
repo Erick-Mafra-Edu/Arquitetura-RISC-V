@@ -1,0 +1,37 @@
+v 4
+file . "muxMem.vhdl" "6c84e17bb79f7b2b63ccf26ddf40a5650bc4b7e1" "20251124002536.591":
+  entity muxmem at 1( 0) + 0 on 125;
+  architecture arch_muxmem of muxmem at 14( 363) + 0 on 126;
+file . "controle.vhdl" "bbbfbe1de6dc8adf0e77953b3338ed0c79509a45" "20251124002536.591":
+  entity controle at 1( 0) + 0 on 127;
+  architecture arch_controle of controle at 19( 998) + 0 on 128;
+file . "banco_registradores.vhdl" "a0b51bfc627ec5e28b9b5a49c6468e755da7f452" "20251124002536.592":
+  entity banco_registradores at 2( 26) + 0 on 129;
+  architecture arch_1 of banco_registradores at 21( 680) + 0 on 130;
+file . "ffd.vhdl" "9c4eb4223cc56292d6de08a4b8bada2391b62b44" "20251124002536.592":
+  entity ffd at 1( 0) + 0 on 131;
+  architecture arch_ffd of ffd at 14( 318) + 0 on 132;
+file . "somador.vhdl" "730a9ba25607b197c5d187d2efb5ac4f7aca1187" "20251124002536.592":
+  entity somador at 2( 26) + 0 on 133;
+  architecture arch_1 of somador at 12( 272) + 0 on 134;
+file . "memoria_instrucoes.vhdl" "65ff5bd40268cf42f2228a36ef6ea895abf763a9" "20251124002536.594":
+  entity memoria_instrucoes at 1( 0) + 0 on 135;
+  architecture arch_memoria_instrucoes of memoria_instrucoes at 13( 299) + 0 on 136;
+file . "gerador_imediato.vhdl" "634df6b6a8e244a11bd32fa76da631619d1cb2b7" "20251124002536.594":
+  entity gerador_imediato at 1( 0) + 0 on 137;
+  architecture arch_gerador_imediato of gerador_imediato at 12( 267) + 0 on 138;
+file . "ULA.vhdl" "469f510ad9cf2a423f079732472521ff93742e7d" "20251124002536.595":
+  entity ula at 2( 37) + 0 on 139;
+  architecture a1 of ula at 20( 654) + 0 on 140;
+file . "mux21.vhdl" "09424d6da51b1227c76b42efc369e9988d16a43e" "20251124002536.595":
+  entity mux21 at 1( 0) + 0 on 141;
+  architecture a1 of mux21 at 19( 379) + 0 on 142;
+file . "memoria_dados.vhdl" "4e26b20c4da3234dcfb39684fae9fd7d74894024" "20251124002536.596":
+  entity memoria_dados at 1( 0) + 0 on 143;
+  architecture arch_memoria_dados of memoria_dados at 17( 435) + 0 on 144;
+file . "design.vhdl" "17486850e6047756a6c5321f2ec4436063f70562" "20251124002536.597":
+  entity riscv32i at 37( 1779) + 0 on 145;
+  architecture arch_3 of riscv32i at 66( 3107) + 0 on 146;
+file . "testbench.vhdl" "c11c880b3cf9356b4eddf0e5975cc010f5f76376" "20251124002536.614":
+  entity testbench at 1( 0) + 0 on 147;
+  architecture test_1 of testbench at 9( 125) + 0 on 148;

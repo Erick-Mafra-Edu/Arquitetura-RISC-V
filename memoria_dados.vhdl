@@ -6,7 +6,6 @@ use ieee.numeric_std.all;
 entity memoria_dados is
 
   Port (	i_CLK  	: in std_logic;
-    		i_RSTn	: in std_logic;
         i_MEM_WRITE : in std_logic;
         i_MEM_READ  : in std_logic;
         i_ADDR  	: in std_logic_vector(31 downto 0);
@@ -21,29 +20,21 @@ architecture arch_memoria_dados of memoria_dados is
   signal memoria : t_MEMORIA := (others => (others => '0'));
   
 begin
-  -- Processo de escrita (síncrono)
-  process(i_CLK, i_RSTn)
+  -- Processo de escrita (siÂ­ncrono) e Processo de leitura (combinacional)
+  process(i_CLK, i_MEM_WRITE, i_ADDR, i_MEM_READ, memoria)
     variable addr_int : integer;
   begin
-    if i_RSTn = '0' then
-      memoria <= (others => (others => '0'));
-    elsif rising_edge(i_CLK) then
+    if rising_edge(i_CLK) then
       if i_MEM_WRITE = '1' then
         addr_int := to_integer(unsigned(i_ADDR));
         if addr_int >= 0 and addr_int < 252 then -- 256 - 4 bytes
-          memoria(addr_int)     <= i_DATA(7 downto 0);
+          memoria(addr_int)     <= i_DATA(7 downto 0);  
           memoria(addr_int + 1) <= i_DATA(15 downto 8);
           memoria(addr_int + 2) <= i_DATA(23 downto 16);
           memoria(addr_int + 3) <= i_DATA(31 downto 24);
         end if;
       end if;
     end if;
-  end process;
-
-  -- Processo de leitura (combinacional)
-  process(i_ADDR, i_MEM_READ, memoria)
-    variable addr_int : integer;
-  begin
     if i_MEM_READ = '1' then
       addr_int := to_integer(unsigned(i_ADDR));
       if addr_int >= 0 and addr_int < 252 then
@@ -56,5 +47,6 @@ begin
       o_DATA <= (others => '0');
     end if;
   end process;
+
 
 end architecture arch_memoria_dados;

@@ -80,7 +80,7 @@ begin
       wait;
     end process u_CLK_GEN;
 
-    -- monitor: imprime o RD e seu conte�do a cada ciclo
+    -- monitor: imprime o RD e seu conteu a cada ciclo
     monitor_proc: process
     begin
         wait until rising_edge(w_CLK);
@@ -90,14 +90,13 @@ begin
 
   process
     begin
-      -- IN�CIO DA SIMULA��O (todas as entradas em zero)
+      -- INiO DA SIMULA��caas as entradas em zero)
       STOP <= FALSE;
       w_RSTn  <= '0';
       wait  for PERIOD;
       
       w_RSTn  <= '1'; --para de resetar
-      wait  for PERIOD; -- cada um desses � o tempo de uma instru��o
-      wait  for PERIOD;
+      wait  for PERIOD; -- cada um desses e tempo de uma instru��cao      wait  for PERIOD;
       wait  for PERIOD;
       wait  for PERIOD;
       wait  for PERIOD;
@@ -108,7 +107,7 @@ begin
       wait  for PERIOD;
       wait  for PERIOD;
 
-      -- FIM DA SIMULA��O
+      -- FIM DA SIMULAcao      
       STOP <= TRUE;
       wait;
   end process;

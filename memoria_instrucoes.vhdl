@@ -30,9 +30,9 @@ architecture arch_memoria_instrucoes of memoria_instrucoes is
 		"00000000","00000000","00000010","00010011", -- addi x2, zero, 0
 	
 		-- create tests to lw sw
-        -- Armazenar 0 na mem�ria
+        -- Armazenar 0 na memÃÂ³ria
 		"00000000","00000000","00000000","00100011", -- sw x0, 0(x0) || opcode=0100011 rs=00000 rt=00000
-		-- Carregar valor da mem�ria
+		-- Carregar valor da memÃÂ³ria
 		"00000100","00000001","00010000","00000011", -- lw x1, 4(x2) || opcode=0000011 rs=00010 rt=00001
 
 		-- Modificar o valor
